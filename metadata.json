@@ -1,0 +1,5 @@
+{
+  "name": "MiniStore E-Commerce",
+  "description": "A comprehensive, mobile-first e-commerce application featuring product browsing, cart management, checkout flows, user profiles, and admin dashboard capabilities.",
+  "requestFramePermissions": []
+}
