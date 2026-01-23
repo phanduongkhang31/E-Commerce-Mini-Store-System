@@ -1,18 +1,9 @@
 import React, { useState } from "react";
 import { Icon } from "../components/Components";
-import { useLanguage } from "../LanguageContext";
 import { useApp, type Address } from "../App";
 
 export default function ShippingAddressesScreen() {
-  const { t } = useLanguage();
-  const {
-    user,
-    addAddress,
-    updateAddress,
-    deleteAddress,
-    setDefaultAddress,
-  } = useApp();
-
+  const { user, addAddress, updateAddress, deleteAddress, setDefaultAddress } = useApp();
   const addresses = user?.addresses || [];
 
   const [showAddForm, setShowAddForm] = useState(false);
@@ -31,7 +22,7 @@ export default function ShippingAddressesScreen() {
   };
 
   const handleDelete = (id: string) => {
-    if (window.confirm(t.shippingAddresses.deleteConfirm)) {
+    if (window.confirm("Bạn có chắc muốn xóa địa chỉ này không?")) {
       deleteAddress(id);
     }
   };
@@ -85,7 +76,7 @@ export default function ShippingAddressesScreen() {
             </h3>
             {address.isDefault && (
               <span className="px-2 py-0.5 bg-primary/10 text-primary text-xs font-medium rounded-full">
-                {t.shippingAddresses.default}
+                Mặc định
               </span>
             )}
           </div>
@@ -108,24 +99,28 @@ export default function ShippingAddressesScreen() {
             type="button"
             onClick={() => handleSetDefault(address.id)}
             className="flex-1 py-2 px-3 rounded-lg border border-primary text-primary text-sm font-medium hover:bg-primary/10 transition-all"
+            aria-label="Nút"
+            title="Nút"
           >
-            {t.shippingAddresses.setAsDefault}
+            Đặt làm mặc định
           </button>
         )}
         <button
           type="button"
           onClick={() => handleEdit(address)}
           className="flex-1 py-2 px-3 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 text-sm font-medium hover:bg-gray-100 dark:hover:bg-[#2a2a45] transition-all"
+          aria-label="Nút"
+          title="Nút"
         >
           <Icon name="edit" className="text-[16px] inline mr-1" />
-          {t.shippingAddresses.edit}
+          Chỉnh sửa
         </button>
         <button
           type="button"
           onClick={() => handleDelete(address.id)}
           className="py-2 px-3 rounded-lg border border-red-200 dark:border-red-900/30 text-red-600 dark:text-red-400 text-sm font-medium hover:bg-red-50 dark:hover:bg-red-900/10 transition-all"
-          title={t.shippingAddresses.delete}
-          aria-label={t.shippingAddresses.delete}
+          title="Xóa"
+          aria-label="Xóa"
         >
           <Icon name="delete" className="text-[16px]" />
         </button>
@@ -158,10 +153,10 @@ export default function ShippingAddressesScreen() {
               <Icon name="location_on" className="text-[48px] text-gray-400" />
             </div>
             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-              {t.shippingAddresses.noAddresses}
+              Chưa có địa chỉ
             </h3>
             <p className="text-gray-500 dark:text-gray-400 mb-6">
-              {t.shippingAddresses.noAddressesMessage}
+              Thêm địa chỉ giao hàng để thanh toán nhanh hơn.
             </p>
           </div>
         ) : (
@@ -173,16 +168,17 @@ export default function ShippingAddressesScreen() {
         )}
       </main>
 
-      {/* Add Button */}
       <div className="fixed bottom-0 left-0 w-full bg-white dark:bg-[#1e1e2d] border-t border-gray-200 dark:border-gray-800 p-4 pb-6 z-40">
         <div className="max-w-lg mx-auto">
           <button
             type="button"
             onClick={() => setShowAddForm(true)}
             className="w-full py-3.5 rounded-xl bg-primary text-white font-semibold hover:bg-primary/90 shadow-lg shadow-primary/25 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+            aria-label="Nút"
+            title="Nút"
           >
             <Icon name="add" className="text-[20px]" />
-            {t.shippingAddresses.addNewAddress}
+            Thêm Địa Chỉ Mới
           </button>
         </div>
       </div>
@@ -190,7 +186,6 @@ export default function ShippingAddressesScreen() {
   );
 }
 
-// Add Address Form Component
 interface AddAddressFormProps {
   onClose: () => void;
   onSave: () => void;
@@ -213,7 +208,6 @@ function AddAddressForm({
   onChange,
   isEditing,
 }: AddAddressFormProps) {
-  const { t } = useLanguage();
   return (
     <div className="flex flex-col h-full bg-white dark:bg-[#1a1a2e]">
       <div className="flex items-center px-4 py-3 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-[#1a1a2e]">
@@ -221,18 +215,17 @@ function AddAddressForm({
           type="button"
           onClick={onClose}
           className="mr-3 text-gray-600 dark:text-gray-300 hover:text-primary transition-colors"
-          aria-label="Back"
+          aria-label="Quay lại"
         >
           <Icon name="arrow_back" className="text-[24px]" />
         </button>
         <h1 className="flex-1 text-lg font-semibold text-gray-900 dark:text-white">
-          {isEditing ? t.shippingAddresses.editAddress : t.shippingAddresses.addNewAddress}
+          {isEditing ? "Chỉnh Sửa Địa Chỉ" : "Thêm Địa Chỉ Mới"}
         </h1>
       </div>
 
       <main className="flex-1 overflow-y-auto pb-24 px-4 pt-4">
         <div className="space-y-4 max-w-lg mx-auto">
-          {/* Name */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
               Họ và Tên
@@ -243,10 +236,10 @@ function AddAddressForm({
               onChange={(e) => onChange("name", e.target.value)}
               placeholder="Nhập họ và tên người nhận"
               className="w-full px-4 py-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#24243e] text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+              aria-label="Trường nhập"
             />
           </div>
 
-          {/* Phone */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
               Số Điện Thoại
@@ -257,10 +250,10 @@ function AddAddressForm({
               onChange={(e) => onChange("phone", e.target.value)}
               placeholder="0123 456 789"
               className="w-full px-4 py-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#24243e] text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+              aria-label="Trường nhập"
             />
           </div>
 
-          {/* Address */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
               Địa Chỉ Cụ Thể
@@ -271,10 +264,10 @@ function AddAddressForm({
               onChange={(e) => onChange("address", e.target.value)}
               placeholder="Số nhà, tên đường"
               className="w-full px-4 py-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#24243e] text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+              aria-label="Trường nhập"
             />
           </div>
 
-          {/* Ward, District, City */}
           <div className="grid grid-cols-3 gap-3">
             <div>
               <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
@@ -286,6 +279,7 @@ function AddAddressForm({
                 onChange={(e) => onChange("ward", e.target.value)}
                 placeholder="Phường 1"
                 className="w-full px-3 py-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#24243e] text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm"
+                aria-label="Trường nhập"
               />
             </div>
 
@@ -299,6 +293,7 @@ function AddAddressForm({
                 onChange={(e) => onChange("district", e.target.value)}
                 placeholder="Quận 1"
                 className="w-full px-3 py-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#24243e] text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm"
+                aria-label="Trường nhập"
               />
             </div>
 
@@ -312,19 +307,21 @@ function AddAddressForm({
                 onChange={(e) => onChange("city", e.target.value)}
                 placeholder="TP.HCM"
                 className="w-full px-3 py-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#24243e] text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm"
+                aria-label="Trường nhập"
               />
             </div>
           </div>
         </div>
       </main>
 
-      {/* Sticky Footer */}
       <div className="fixed bottom-0 left-0 w-full bg-white dark:bg-[#1e1e2d] border-t border-gray-200 dark:border-gray-800 p-4 pb-6 z-40">
         <div className="max-w-lg mx-auto flex gap-3">
           <button
             type="button"
             onClick={onClose}
             className="flex-1 py-3.5 rounded-xl border-2 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-semibold hover:bg-gray-50 dark:hover:bg-[#24243e] transition-all"
+            aria-label="Nút"
+            title="Nút"
           >
             Hủy
           </button>
@@ -332,6 +329,8 @@ function AddAddressForm({
             type="button"
             onClick={onSave}
             className="flex-1 py-3.5 rounded-xl bg-primary text-white font-semibold hover:bg-primary/90 shadow-lg shadow-primary/25 active:scale-[0.98] transition-all"
+            aria-label="Nút"
+            title="Nút"
           >
             {isEditing ? "Cập Nhật" : "Lưu Địa Chỉ"}
           </button>

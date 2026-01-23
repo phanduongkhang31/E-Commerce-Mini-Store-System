@@ -13,17 +13,17 @@ export default function ForgotPasswordScreen() {
                 <Icon name="lock_reset" className="text-primary text-5xl" />
             </div>
          </div>
-         <div className="text-center mb-8">
-            <h1 className="text-slate-900 dark:text-white text-[32px] font-bold mb-3">Forgot Password?</h1>
-            <p className="text-gray-500">Don't worry! It happens. Please enter the email associated with your account.</p>
+        <div className="text-center mb-8">
+            <h1 className="text-slate-900 dark:text-white text-[32px] font-bold mb-3">Quên Mật Khẩu?</h1>
+            <p className="text-gray-500">Đừng lo! Điều này xảy ra. Vui lòng nhập email liên kết với tài khoản của bạn.</p>
          </div>
          <form className="flex flex-col gap-6" onSubmit={(e) => { e.preventDefault(); navigate('/check-mail'); }}>
-            <label className="block"><span className="text-sm font-semibold text-slate-900 dark:text-white mb-2 block">Email Address</span><Input icon="mail" type="email" placeholder="Enter your email" /></label>
-            <Button type="submit">Send Reset Link</Button>
+            <label className="block"><span className="text-sm font-semibold text-slate-900 dark:text-white mb-2 block">Email</span><Input icon="mail" type="email" placeholder="Nhập email của bạn" /></label>
+            <Button type="submit">Gửi liên kết đặt lại</Button>
          </form>
          <div className="mt-auto pb-8 text-center">
-             <span className="text-gray-500 text-sm">Remember your password? </span>
-             <span className="text-primary font-bold text-sm cursor-pointer" onClick={() => navigate('/login')}>Login</span>
+             <span className="text-gray-500 text-sm">Nhớ mật khẩu của bạn? </span>
+             <span className="text-primary font-bold text-sm cursor-pointer" onClick={() => navigate('/login')}>Đăng nhập</span>
          </div>
       </main>
     </div>

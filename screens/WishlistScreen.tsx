@@ -5,14 +5,19 @@ import { useApp } from "../App";
 
 export default function WishlistScreen() {
   const navigate = useNavigate();
-  const { products, wishlist, toggleWishlist, addToCart } = useApp();
+  const { products, wishlist, toggleWishlist, addToCart, clearWishlist } = useApp();
 
   const wishlistProducts = products.filter((p) => wishlist.includes(p.id));
+
+  const handleClearWishlist = () => {
+    if (!window.confirm("Bạn có chắc muốn xóa hết danh sách yêu thích không?")) return;
+    clearWishlist();
+  };
 
   if (wishlistProducts.length === 0) {
     return (
       <div className="flex flex-col h-full bg-white dark:bg-[#1a1a2e]">
-        <Header title="Yêu Thích" />
+        <Header title="Danh sách yêu thích" />
         <main className="flex-1 flex flex-col items-center justify-center p-6 text-center">
           <div className="mb-6 flex size-24 items-center justify-center rounded-full bg-pink-50 dark:bg-pink-900/20">
             <Icon name="favorite" className="text-5xl text-pink-400" />
@@ -21,13 +26,15 @@ export default function WishlistScreen() {
             Chưa có sản phẩm yêu thích
           </h2>
           <p className="text-slate-500 dark:text-slate-400 mb-8 max-w-[260px]">
-            Thêm sản phẩm vào danh sách yêu thích để mua sau.
+            Hãy thêm sản phẩm vào yêu thích để mua sau.
           </p>
           <button
             onClick={() => navigate("/")}
             className="px-6 py-3 bg-primary text-white rounded-xl font-semibold hover:bg-primary/90 transition-all"
+            aria-label="Khám phá ngay"
+            title="Khám phá ngay"
           >
-            Khám Phá Ngay
+            Khám phá ngay
           </button>
         </main>
         <BottomNav activeTab="products" />
@@ -37,13 +44,21 @@ export default function WishlistScreen() {
 
   return (
     <div className="flex flex-col h-full bg-white dark:bg-[#1a1a2e]">
-      <Header title="Yêu Thích" />
+      <Header title="Danh sách yêu thích" />
 
       <main className="flex-1 overflow-y-auto pb-24 px-4 pt-4">
-        <div className="mb-4">
+        <div className="mb-4 flex items-center justify-between gap-3">
           <p className="text-sm text-gray-600 dark:text-gray-400">
             {wishlistProducts.length} sản phẩm
           </p>
+          <button
+            onClick={handleClearWishlist}
+            className="text-sm font-semibold text-red-500 hover:text-red-600 transition-colors"
+            aria-label="Xóa tất cả"
+            title="Xóa tất cả"
+          >
+            Xóa tất cả
+          </button>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
@@ -67,6 +82,8 @@ export default function WishlistScreen() {
                     toggleWishlist(product.id);
                   }}
                   className="absolute top-2 right-2 size-8 rounded-full bg-white/80 dark:bg-black/50 backdrop-blur-sm flex items-center justify-center text-red-500 hover:bg-white dark:hover:bg-black transition-all"
+                  aria-label="Bỏ khỏi yêu thích"
+                  title="Bỏ khỏi yêu thích"
                 >
                   <Icon name="favorite" className="text-xl" />
                 </button>
@@ -86,7 +103,7 @@ export default function WishlistScreen() {
                     {product.rating.toFixed(1)}
                   </span>
                   <span className="text-gray-400">
-                    ({product.reviews} reviews)
+                    ({product.reviews} đánh giá)
                   </span>
                 </div>
 
@@ -105,6 +122,8 @@ export default function WishlistScreen() {
                   <button
                     onClick={() => addToCart(product)}
                     className="size-9 rounded-full bg-primary/10 text-primary flex items-center justify-center hover:bg-primary/20 transition-all"
+                    aria-label="Thêm vào giỏ hàng"
+                    title="Thêm vào giỏ hàng"
                   >
                     <Icon name="add_shopping_cart" className="text-xl" />
                   </button>
@@ -119,4 +138,3 @@ export default function WishlistScreen() {
     </div>
   );
 }
-

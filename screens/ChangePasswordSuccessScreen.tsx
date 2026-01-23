@@ -18,10 +18,10 @@ export default function ChangePasswordSuccessScreen() {
                <div className="mb-5 size-20 rounded-full bg-primary/10 flex items-center justify-center">
                   <Icon name="check_circle" className="text-[40px] text-primary" />
                </div>
-               <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Password Updated</h2>
-               <p className="text-sm text-gray-500 mb-8">Your new password has been saved. You can now use it to access your store dashboard.</p>
-               <Button className="w-full" onClick={() => navigate('/login')}>Back to Login</Button>
-               <button className="mt-4 text-sm text-gray-400 font-medium hover:text-primary" onClick={() => navigate('/profile')}>Dismiss</button>
+               <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Đã cập nhật mật khẩu</h2>
+               <p className="text-sm text-gray-500 mb-8">Mật khẩu mới đã được lưu. Bạn có thể dùng để truy cập bảng điều khiển cửa hàng.</p>
+               <Button className="w-full" onClick={() => navigate('/login')}>Quay lại đăng nhập</Button>
+               <button className="mt-4 text-sm text-gray-400 font-medium hover:text-primary" onClick={() => navigate('/profile')} aria-label="Nút" title="Nút">Đóng</button>
            </div>
        </div>
     </div>

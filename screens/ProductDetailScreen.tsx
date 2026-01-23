@@ -21,10 +21,10 @@ export default function ProductDetailScreen() {
     <div className="relative flex h-full flex-col bg-background-light dark:bg-background-dark">
        {/* Header */}
       <header className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between p-4 bg-gradient-to-b from-black/20 to-transparent">
-        <button onClick={() => navigate(-1)} className="flex size-10 items-center justify-center rounded-full bg-white/90 dark:bg-black/50 backdrop-blur-sm shadow-sm transition-transform active:scale-95">
+        <button onClick={() => navigate(-1)} className="flex size-10 items-center justify-center rounded-full bg-white/90 dark:bg-black/50 backdrop-blur-sm shadow-sm transition-transform active:scale-95" aria-label="Nút" title="Nút">
           <Icon name="arrow_back_ios_new" className="text-gray-900 dark:text-white" />
         </button>
-        <button onClick={() => navigate('/cart')} className="relative flex size-10 items-center justify-center rounded-full bg-white/90 dark:bg-black/50 backdrop-blur-sm shadow-sm transition-transform active:scale-95">
+        <button onClick={() => navigate('/cart')} className="relative flex size-10 items-center justify-center rounded-full bg-white/90 dark:bg-black/50 backdrop-blur-sm shadow-sm transition-transform active:scale-95" aria-label="Nút" title="Nút">
           <Icon name="shopping_cart" className="text-gray-900 dark:text-white" />
           {cartCount > 0 && <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white border-2 border-white dark:border-black">{cartCount}</span>}
         </button>
@@ -39,7 +39,7 @@ export default function ProductDetailScreen() {
          <div className="relative -mt-6 rounded-t-3xl bg-white dark:bg-[#1e1e2d] px-6 pt-8 pb-6 shadow-[0_-4px_20px_-10px_rgba(0,0,0,0.1)]">
             <div className="flex items-start justify-between gap-4 mb-3">
               <h1 className="text-2xl font-bold leading-tight text-gray-900 dark:text-white">{product.name}</h1>
-              <button className="p-2 -mr-2 text-gray-400 hover:text-red-500 transition-colors">
+              <button className="p-2 -mr-2 text-gray-400 hover:text-red-500 transition-colors" aria-label="Nút" title="Nút">
                 <Icon name="favorite" />
               </button>
             </div>
@@ -62,25 +62,25 @@ export default function ProductDetailScreen() {
                   <Icon name="star_half" className="text-[20px]" filled />
                 </div>
                 <span className="text-sm font-semibold text-gray-900 dark:text-white">{product.rating || 0}</span>
-                <span className="text-sm text-gray-500 dark:text-gray-400">({product.reviews || 0} reviews)</span>
+                <span className="text-sm text-gray-500 dark:text-gray-400">({product.reviews || 0} đánh giá)</span>
             </div>
 
             <div className="h-px bg-gray-100 dark:bg-gray-800 my-6"></div>
 
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Description</h3>
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Mô tả</h3>
             <p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed">{product.description}</p>
 
             <div className="h-px bg-gray-100 dark:bg-gray-800 my-6"></div>
 
             {/* Quantity */}
             <div className="flex items-center justify-between">
-              <span className="text-base font-medium text-gray-900 dark:text-white">Quantity</span>
+              <span className="text-base font-medium text-gray-900 dark:text-white">Số lượng</span>
               <div className="flex items-center bg-gray-100 dark:bg-black/20 rounded-lg p-1">
-                 <button onClick={() => setQty(q => Math.max(1, q - 1))} className="size-8 flex items-center justify-center rounded-md bg-white dark:bg-gray-700 shadow-sm text-gray-600 dark:text-gray-200">
+                 <button onClick={() => setQty(q => Math.max(1, q - 1))} className="size-8 flex items-center justify-center rounded-md bg-white dark:bg-gray-700 shadow-sm text-gray-600 dark:text-gray-200" aria-label="Nút" title="Nút">
                     <Icon name="remove" className="text-lg" />
                  </button>
                  <span className="w-10 text-center font-semibold text-gray-900 dark:text-white">{qty}</span>
-                 <button onClick={() => setQty(q => q + 1)} className="size-8 flex items-center justify-center rounded-md bg-white dark:bg-gray-700 shadow-sm text-gray-600 dark:text-gray-200">
+                 <button onClick={() => setQty(q => q + 1)} className="size-8 flex items-center justify-center rounded-md bg-white dark:bg-gray-700 shadow-sm text-gray-600 dark:text-gray-200" aria-label="Nút" title="Nút">
                     <Icon name="add" className="text-lg" />
                  </button>
               </div>
@@ -90,8 +90,8 @@ export default function ProductDetailScreen() {
 
       <div className="absolute bottom-0 left-0 right-0 p-4 pb-8 bg-white dark:bg-[#1e1e2d] border-t border-gray-100 dark:border-gray-800 z-10">
          <div className="flex gap-3">
-            <Button variant="outline" className="flex-1" onClick={handleAddToCart}>Add to Cart</Button>
-            <Button className="flex-1" onClick={() => { handleAddToCart(); navigate('/cart'); }}>Buy Now</Button>
+            <Button variant="outline" className="flex-1" onClick={handleAddToCart}>Thêm vào giỏ hàng</Button>
+            <Button className="flex-1" onClick={() => { handleAddToCart(); navigate('/cart'); }}>Mua Ngay</Button>
          </div>
       </div>
     </div>

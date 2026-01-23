@@ -16,6 +16,8 @@ export const BottomNav = ({ activeTab }: { activeTab: 'home' | 'products' | 'car
       <button 
         onClick={() => navigate(path)}
         className={`flex flex-col items-center gap-1 transition-colors ${isActive ? 'text-primary' : 'text-gray-400 dark:text-gray-500 hover:text-primary'}`}
+        aria-label={label}
+        title={label}
       >
         <Icon name={icon} className={`${isActive ? 'fill' : ''} text-[24px]`} filled={isActive} />
         <span className="text-[10px] font-medium">{label}</span>
@@ -26,16 +28,16 @@ export const BottomNav = ({ activeTab }: { activeTab: 'home' | 'products' | 'car
   return (
     <nav className="fixed bottom-0 left-0 w-full bg-white dark:bg-[#1a1929] border-t border-gray-100 dark:border-gray-800 px-6 py-2 pb-5 sm:pb-2 z-50">
       <div className="flex justify-between items-center max-w-md mx-auto">
-        <NavItem icon="home" label="Home" id="home" path="/" />
-        <NavItem icon="grid_view" label="Categories" id="products" path="/admin/products" />
-        <NavItem icon="shopping_bag" label="Cart" id="cart" path="/cart" />
-        <NavItem icon="person" label="Profile" id="profile" path="/profile" />
+        <NavItem icon="home" label="Trang Chủ" id="home" path="/" />
+        <NavItem icon="grid_view" label="Danh Mục" id="products" path="/categories" />
+        <NavItem icon="shopping_bag" label="Giỏ Hàng" id="cart" path="/cart" />
+        <NavItem icon="person" label="Hồ Sơ" id="profile" path="/profile" />
       </div>
     </nav>
   );
 };
 
-export const AdminBottomNav = ({ activeTab }: { activeTab: 'dashboard' | 'products' | 'orders' | 'profile' }) => {
+export const AdminBottomNav = ({ activeTab }: { activeTab: 'dashboard' | 'products' | 'orders' | 'settings' }) => {
   const navigate = useNavigate();
 
   const NavItem = ({ icon, label, id, path }: { icon: string; label: string; id: string; path: string }) => {
@@ -44,6 +46,8 @@ export const AdminBottomNav = ({ activeTab }: { activeTab: 'dashboard' | 'produc
       <button 
         onClick={() => navigate(path)}
         className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition-colors ${isActive ? 'text-primary' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'}`}
+        aria-label={label}
+        title={label}
       >
         <Icon name={icon} className={`${isActive ? 'fill' : ''}`} />
         <span className="text-[10px] font-medium">{label}</span>
@@ -54,32 +58,50 @@ export const AdminBottomNav = ({ activeTab }: { activeTab: 'dashboard' | 'produc
   return (
     <nav className="fixed bottom-0 left-0 w-full bg-white dark:bg-[#1a1a2e] border-t border-gray-200 dark:border-gray-800 pb-safe z-50">
         <div className="flex justify-around items-center h-16 max-w-md mx-auto px-2">
-            <NavItem icon="dashboard" label="Home" id="dashboard" path="/admin" />
-            <NavItem icon="inventory_2" label="Products" id="products" path="/admin/products" />
+            <NavItem icon="dashboard" label="Bảng Điều Khiển" id="dashboard" path="/admin" />
+            <NavItem icon="inventory_2" label="Sản Phẩm" id="products" path="/admin/products" />
             
             <div className="relative -top-5">
                 <button 
                   onClick={() => navigate('/admin/add-product')}
                   className="bg-primary hover:bg-primary/90 text-white rounded-full h-14 w-14 flex items-center justify-center shadow-lg shadow-primary/30 transition-transform hover:scale-105 active:scale-95"
+                  aria-label="Thêm Sản Phẩm"
+                  title="Thêm Sản Phẩm"
                 >
                     <Icon name="add" className="text-[28px]" />
                 </button>
             </div>
 
-            <NavItem icon="shopping_bag" label="Orders" id="orders" path="/admin/orders" />
-            <NavItem icon="person" label="Profile" id="profile" path="/profile" />
+            <NavItem icon="shopping_bag" label="Đơn Hàng" id="orders" path="/admin/orders" />
+            <NavItem icon="settings" label="Cài Đặt" id="settings" path="/admin/settings" />
         </div>
     </nav>
   );
 };
 
-export const Header = ({ title, showBack = true, rightAction }: { title?: string, showBack?: boolean, rightAction?: React.ReactNode }) => {
+export const Header = ({
+  title,
+  showBack = true,
+  goBack,
+  rightAction,
+}: {
+  title?: string;
+  showBack?: boolean;
+  goBack?: () => void;
+  rightAction?: React.ReactNode;
+}) => {
   const navigate = useNavigate();
   return (
     <div className="sticky top-0 z-20 flex items-center bg-white/95 dark:bg-[#1a1929]/95 backdrop-blur-sm p-4 pb-2 justify-between border-b border-gray-100 dark:border-gray-800">
       <div className="flex items-center gap-4">
         {showBack && (
-          <button onClick={() => navigate(-1)} className="text-gray-900 dark:text-white flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <button
+            type="button"
+            onClick={() => (goBack ? goBack() : navigate(-1))}
+            aria-label="Quay lại"
+            title="Quay lại"
+            className="text-gray-900 dark:text-white flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          >
             <Icon name="arrow_back_ios_new" />
           </button>
         )}
@@ -100,7 +122,7 @@ export const Button = ({ children, variant = 'primary', className = "", ...props
   };
 
   return (
-    <button className={`${baseStyle} ${variants[variant]} ${className}`} {...props}>
+    <button className={`${baseStyle} ${variants[variant]} ${className}`} {...props} aria-label="Nút" title="Nút">
       {children}
     </button>
   );
@@ -117,7 +139,7 @@ export const Input = ({ icon, className = "", ...props }: React.InputHTMLAttribu
       <input 
         className={`form-input flex w-full min-w-0 resize-none overflow-hidden rounded-xl text-gray-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 focus:border-primary h-14 placeholder:text-gray-400 ${icon ? 'pl-11' : 'pl-4'} pr-4 text-base font-normal leading-normal shadow-sm transition-all ${className}`}
         {...props} 
-      />
+       aria-label="Trường nhập" />
     </div>
   );
 };

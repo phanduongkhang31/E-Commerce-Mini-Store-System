@@ -1,11 +1,12 @@
-import React, { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { Icon, Input, Button } from "../components/Components";
 import { useApp } from "../App";
 
-export default function AdminAddProductScreen() {
+export default function AdminEditProductScreen() {
   const navigate = useNavigate();
-  const { addProduct, categories } = useApp();
+  const { id } = useParams();
+  const { products, updateProduct, categories } = useApp();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const [formData, setFormData] = useState({
@@ -13,12 +14,28 @@ export default function AdminAddProductScreen() {
     price: "",
     stock: "",
     category: "",
-    image: "https://placehold.co/400x400/5048e5/ffffff?text=New+Product",
+    image: "",
     description: "",
   });
 
+  useEffect(() => {
+    const product = products.find((p) => p.id === id);
+    if (product) {
+      setFormData({
+        name: product.name,
+        price: product.price.toString(),
+        stock: product.stock.toString(),
+        category: product.category,
+        image: product.image,
+        description: product.description,
+      });
+    } else {
+      navigate("/admin/products");
+    }
+  }, [id, products, navigate]);
+
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -41,16 +58,17 @@ export default function AdminAddProductScreen() {
       return;
     }
 
-    addProduct({
-      name: formData.name,
-      price: parseFloat(formData.price),
-      stock: parseInt(formData.stock) || 0,
-      category: formData.category || "Chưa phân loại",
-      image: formData.image,
-      description: formData.description || "Sản phẩm mới được thêm.",
-      originalPrice: parseFloat(formData.price) * 1.2,
-    });
-    navigate(-1);
+    if (id) {
+      updateProduct(id, {
+        name: formData.name,
+        price: parseFloat(formData.price),
+        stock: parseInt(formData.stock) || 0,
+        category: formData.category,
+        image: formData.image,
+        description: formData.description,
+      });
+      navigate(-1);
+    }
   };
 
   return (
@@ -60,7 +78,7 @@ export default function AdminAddProductScreen() {
           <div className="h-1.5 w-10 rounded-full bg-gray-300 dark:bg-gray-700 mb-3"></div>
           <div className="w-full px-4 flex justify-between items-center">
             <div className="w-8"></div>
-            <h4 className="font-bold text-lg dark:text-white">Thêm Sản Phẩm Mới</h4>
+            <h4 className="font-bold text-lg dark:text-white">Chỉnh Sửa Sản Phẩm</h4>
             <button
               onClick={() => navigate(-1)}
               className="size-8 rounded-full hover:bg-gray-100 flex items-center justify-center text-gray-500"
@@ -73,28 +91,23 @@ export default function AdminAddProductScreen() {
         </div>
 
         <div className="flex-1 overflow-y-auto p-4 pb-24">
-          <label className="block mb-2 text-sm font-medium dark:text-gray-200">
-            Hình Ảnh Sản Phẩm
-          </label>
-          <div
-            onClick={() => fileInputRef.current?.click()}
-            className="relative aspect-[4/3] rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-white/5 flex flex-col items-center justify-center gap-3 cursor-pointer hover:bg-gray-100 transition-colors mb-6 overflow-hidden"
-            aria-label="Chạm để thêm ảnh (dùng ảnh mặc định)"
-            title="Chạm để thêm ảnh (dùng ảnh mặc định)"
-          >
-            <img
-              src={formData.image}
-              alt="Xem trước"
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            <div className="relative z-10 flex flex-col items-center gap-2 bg-white/80 dark:bg-black/40 px-4 py-2 rounded-lg">
-              <div className="h-10 w-10 rounded-full bg-white dark:bg-gray-800 shadow-sm flex items-center justify-center text-primary">
-                <Icon name="add_a_photo" className="text-xl" />
-              </div>
-              <p className="text-gray-600 dark:text-gray-200 text-sm font-medium">
-                Chạm để thêm ảnh (dùng ảnh mặc định)
-              </p>
+          <div className="flex flex-col items-center mb-6">
+            <div className="size-24 rounded-xl bg-gray-100 border border-gray-200 overflow-hidden mb-2">
+              <img
+                src={formData.image}
+                alt="Xem trước"
+                className="w-full h-full object-cover"
+                onError={(e) => (e.currentTarget.src = "https://placehold.co/400")}
+              />
             </div>
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="text-primary text-sm font-bold hover:underline"
+              aria-label="Chạm để thêm ảnh (dùng ảnh mặc định)"
+              title="Chạm để thêm ảnh (dùng ảnh mặc định)"
+            >
+              Chạm để thêm ảnh (dùng ảnh mặc định)
+            </button>
             <input
               ref={fileInputRef}
               type="file"
@@ -103,6 +116,13 @@ export default function AdminAddProductScreen() {
               className="hidden"
               aria-label="URL Hình Ảnh"
             />
+            <Input
+              name="image"
+              value={formData.image}
+              onChange={handleChange}
+              placeholder="https://..."
+              className="mt-2 text-xs"
+            />
           </div>
 
           <div className="flex flex-col gap-4">
@@ -110,12 +130,7 @@ export default function AdminAddProductScreen() {
               <span className="text-sm font-medium mb-2 block dark:text-white">
                 Tên Sản Phẩm
               </span>
-              <Input
-                name="name"
-                placeholder="Nhập tên sản phẩm"
-                value={formData.name}
-                onChange={handleChange}
-              />
+              <Input name="name" value={formData.name} onChange={handleChange} />
             </label>
             <div className="flex gap-4">
               <label className="flex-1">
@@ -125,7 +140,6 @@ export default function AdminAddProductScreen() {
                 <Input
                   name="price"
                   type="number"
-                  placeholder="0.00"
                   icon="attach_money"
                   value={formData.price}
                   onChange={handleChange}
@@ -135,13 +149,7 @@ export default function AdminAddProductScreen() {
                 <span className="text-sm font-medium mb-2 block dark:text-white">
                   Tồn Kho
                 </span>
-                <Input
-                  name="stock"
-                  type="number"
-                  placeholder="0"
-                  value={formData.stock}
-                  onChange={handleChange}
-                />
+                <Input name="stock" type="number" value={formData.stock} onChange={handleChange} />
               </label>
             </div>
             <label className="block">
@@ -156,14 +164,13 @@ export default function AdminAddProductScreen() {
                   className="form-select w-full rounded-xl border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 h-12 px-4 appearance-none dark:text-white"
                   aria-label="Danh Mục"
                 >
-                  <option value="">Chọn danh mục</option>
                   {(categories.length > 0
                     ? categories
                     : [
-                        { id: "clothing", name: "Thời trang" },
-                        { id: "electronics", name: "Điện tử" },
-                        { id: "home", name: "Nhà cửa" },
-                        { id: "beauty", name: "Làm đẹp" },
+                        { id: "clothing", name: "Clothing" },
+                        { id: "electronics", name: "Electronics" },
+                        { id: "home", name: "Home" },
+                        { id: "beauty", name: "Beauty" },
                       ]
                   ).map((category) => (
                     <option key={category.id} value={category.name}>
@@ -178,24 +185,22 @@ export default function AdminAddProductScreen() {
             </label>
             <label className="block">
               <span className="text-sm font-medium mb-2 block dark:text-white">
-                URL Hình Ảnh
+                Mô Tả
               </span>
-              <Input
-                name="image"
-                placeholder="https://..."
-                value={formData.image}
+              <textarea
+                name="description"
+                value={formData.description}
                 onChange={handleChange}
-              />
+                className="w-full rounded-xl border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 text-sm dark:text-white focus:ring-2 focus:ring-primary/50 outline-none resize-none h-32"
+                aria-label="Mô Tả"
+              ></textarea>
             </label>
           </div>
         </div>
 
         <div className="p-4 border-t border-gray-100 dark:border-gray-800 flex flex-col gap-3 bg-white dark:bg-[#121121]">
           <Button onClick={handleSubmit} className="w-full gap-2">
-            <Icon name="save" /> Lưu Sản Phẩm
-          </Button>
-          <Button variant="ghost" onClick={() => navigate(-1)}>
-            Hủy
+            <Icon name="save" /> Lưu Thay Đổi
           </Button>
         </div>
       </div>

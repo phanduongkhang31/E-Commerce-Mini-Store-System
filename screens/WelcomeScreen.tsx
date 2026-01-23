@@ -7,26 +7,21 @@ export default function WelcomeScreen() {
 
   return (
     <div className="flex flex-col h-full bg-gradient-to-br from-purple-600 via-indigo-600 to-blue-600 dark:from-purple-900 dark:via-indigo-900 dark:to-blue-900 p-6 justify-center">
-      {/* Logo & Title */}
       <div className="flex flex-col items-center text-center mb-12">
         <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-3xl bg-white/20 backdrop-blur-sm text-white shadow-2xl">
           <Icon name="storefront" className="text-[48px]" />
         </div>
-        <h1 className="text-white text-4xl font-bold leading-tight mb-3">
-          MiniStore
-        </h1>
-        <p className="text-white/80 text-lg">
-          Chào mừng đến với hệ thống quản lý
-        </p>
+        <h1 className="text-white text-4xl font-bold leading-tight mb-3">MiniStore</h1>
+        <p className="text-white/80 text-lg">Chào mừng đến với hệ thống quản lý</p>
       </div>
 
-      {/* Role Selection Cards */}
       <div className="space-y-4 mb-8">
-        {/* User Card */}
         <button
           type="button"
           onClick={() => navigate("/login")}
           className="w-full bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-2xl hover:shadow-3xl transition-all active:scale-95 group"
+          aria-label="Nút"
+          title="Nút"
         >
           <div className="flex items-center gap-4">
             <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 text-white shadow-lg group-hover:scale-110 transition-transform">
@@ -47,11 +42,12 @@ export default function WelcomeScreen() {
           </div>
         </button>
 
-        {/* Admin Card */}
         <button
           type="button"
           onClick={() => navigate("/login")}
           className="w-full bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-2xl hover:shadow-3xl transition-all active:scale-95 group"
+          aria-label="Nút"
+          title="Nút"
         >
           <div className="flex items-center gap-4">
             <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-lg group-hover:scale-110 transition-transform">
@@ -73,11 +69,8 @@ export default function WelcomeScreen() {
         </button>
       </div>
 
-      {/* Features */}
       <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-        <h4 className="text-white font-semibold mb-4 text-center">
-          Tính Năng Nổi Bật
-        </h4>
+        <h4 className="text-white font-semibold mb-4 text-center">Tính Năng Nổi Bật</h4>
         <div className="grid grid-cols-2 gap-4">
           <div className="flex items-center gap-2">
             <Icon name="verified" className="text-green-400 text-xl" filled />
@@ -93,18 +86,14 @@ export default function WelcomeScreen() {
           </div>
           <div className="flex items-center gap-2">
             <Icon name="payments" className="text-pink-400 text-xl" />
-            <span className="text-white/90 text-sm">Đa dạng TT</span>
+            <span className="text-white/90 text-sm">Đa dạng thanh toán</span>
           </div>
         </div>
       </div>
 
-      {/* Footer */}
       <div className="mt-auto pt-8 text-center">
-        <p className="text-white/60 text-xs">
-          © 2024 MiniStore. All rights reserved.
-        </p>
+        <p className="text-white/60 text-xs">© 2024 MiniStore. Bảo lưu mọi quyền.</p>
       </div>
     </div>
   );
 }
-
