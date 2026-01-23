@@ -31,6 +31,7 @@ import AdminDashboardScreen from "./screens/AdminDashboardScreen";
 import AdminSettingsScreen from "./screens/AdminSettingsScreen";
 import AdminCategoriesScreen from "./screens/AdminCategoriesScreen";
 import AdminCustomersScreen from "./screens/AdminCustomersScreen";
+import AdminCustomerDetailScreen from "./screens/AdminCustomerDetailScreen";
 import WishlistScreen from "./screens/WishlistScreen";
 import CategoriesScreen from "./screens/CategoriesScreen";
 import PersonalDetailsScreen from "./screens/PersonalDetailsScreen";
@@ -203,7 +204,7 @@ const AppProvider = ({ children }: { children?: React.ReactNode }) => {
 
   const adminEmails = (import.meta.env.VITE_ADMIN_EMAILS || "")
     .split(",")
-    .map((email) => email.trim())
+    .map((email: string) => email.trim())
     .filter(Boolean);
 
   const resolveRoleFromEmail = (email?: string | null): "admin" | "user" => {
@@ -531,6 +532,7 @@ const AppContent = () => {
           <Route path="/admin/edit-product/:id" element={<ProtectedRoute requireAdmin><AdminEditProductScreen /></ProtectedRoute>} />
           <Route path="/admin/categories" element={<ProtectedRoute requireAdmin><AdminCategoriesScreen /></ProtectedRoute>} />
           <Route path="/admin/customers" element={<ProtectedRoute requireAdmin><AdminCustomersScreen /></ProtectedRoute>} />
+          <Route path="/admin/customers/:customerId" element={<ProtectedRoute requireAdmin><AdminCustomerDetailScreen /></ProtectedRoute>} />
           <Route path="/admin/orders" element={<ProtectedRoute requireAdmin><AdminOrderListScreen /></ProtectedRoute>} />
           <Route path="/admin/orders/:id" element={<ProtectedRoute requireAdmin><AdminOrderDetailScreen /></ProtectedRoute>} />
 
