@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { Header, Icon, BottomNav } from "../components/Components";
+import { Header, Icon, BottomNav , formatVnd } from "../components/Components";
 import { useApp } from "../App";
 
 export default function OrderHistoryScreen() {
@@ -93,7 +93,7 @@ export default function OrderHistoryScreen() {
                           <p className="text-gray-600 dark:text-gray-400 text-sm font-medium">
                             {order.items} sản phẩm
                           </p>
-                          <p className="text-slate-900 dark:text-white text-lg font-bold">${order.total.toFixed(2)}</p>
+                          <p className="text-slate-900 dark:text-white text-lg font-bold">{formatVnd(order.total)}</p>
                        </div>
                    </div>
                 </div>

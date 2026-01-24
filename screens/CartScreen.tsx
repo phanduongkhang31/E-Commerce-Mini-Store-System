@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Header, Icon, Button } from '../components/Components';
+import { Header, Icon, Button , formatVnd } from '../components/Components';
 import { useApp } from '../App';
 
 export default function CartScreen() {
@@ -47,7 +47,7 @@ export default function CartScreen() {
                     <p className="text-sm text-slate-500 dark:text-slate-400">{item.category}</p>
                  </div>
                  <div className="flex items-center justify-between mt-2">
-                    <p className="font-bold text-slate-900 dark:text-white">${item.price.toFixed(2)}</p>
+                    <p className="font-bold text-slate-900 dark:text-white">{formatVnd(item.price)}</p>
                     <div className="flex h-8 items-center rounded-lg bg-gray-100 dark:bg-gray-800 p-1">
                         <button onClick={() => updateQuantity(item.id, -1)} className="flex size-6 items-center justify-center rounded-md bg-white dark:bg-gray-700 shadow-sm text-slate-600 dark:text-slate-200" aria-label="Button" title="Button">
                             <span className="text-lg font-medium">-</span>
@@ -66,11 +66,11 @@ export default function CartScreen() {
         <div className="mt-6 rounded-xl bg-white dark:bg-[#1e1e2d] p-5 shadow-sm">
            <h2 className="mb-4 text-base font-bold text-slate-900 dark:text-white">Tóm tắt đơn hàng</h2>
            <div className="flex flex-col gap-3">
-             <div className="flex justify-between text-sm"><span className="text-slate-500 dark:text-slate-400">Tổng tiền</span><span className="font-medium text-slate-900 dark:text-white">${subtotal.toFixed(2)}</span></div>
-             <div className="flex justify-between text-sm"><span className="text-slate-500 dark:text-slate-400">Vận chuyển</span><span className="font-medium text-slate-900 dark:text-white">${shipping.toFixed(2)}</span></div>
-             <div className="flex justify-between text-sm"><span className="text-slate-500 dark:text-slate-400">Thuế</span><span className="font-medium text-slate-900 dark:text-white">${tax.toFixed(2)}</span></div>
+             <div className="flex justify-between text-sm"><span className="text-slate-500 dark:text-slate-400">Tổng tiền</span><span className="font-medium text-slate-900 dark:text-white">{formatVnd(subtotal)}</span></div>
+             <div className="flex justify-between text-sm"><span className="text-slate-500 dark:text-slate-400">Vận chuyển</span><span className="font-medium text-slate-900 dark:text-white">{formatVnd(shipping)}</span></div>
+             <div className="flex justify-between text-sm"><span className="text-slate-500 dark:text-slate-400">Thuế</span><span className="font-medium text-slate-900 dark:text-white">{formatVnd(tax)}</span></div>
              <div className="h-px bg-slate-100 dark:bg-slate-800 my-1"></div>
-             <div className="flex justify-between"><span className="text-base font-bold text-slate-900 dark:text-white">Tổng</span><span className="text-xl font-bold text-primary">${total.toFixed(2)}</span></div>
+             <div className="flex justify-between"><span className="text-base font-bold text-slate-900 dark:text-white">Tổng</span><span className="text-xl font-bold text-primary">{formatVnd(total)}</span></div>
            </div>
         </div>
       </main>

@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BottomNav, Header, Icon } from "../components/Components";
+import { BottomNav, Header, Icon , formatVnd } from "../components/Components";
 import { useApp } from "../App";
 
 export default function CategoriesScreen() {
@@ -247,7 +247,7 @@ export default function CategoriesScreen() {
                     </h3>
                     <div className="mt-auto pt-2 flex items-end justify-between">
                       <span className="text-base font-bold text-gray-900 dark:text-white">
-                        ${product.price.toFixed(2)}
+                        {formatVnd(product.price)}
                       </span>
                       <button
                         type="button"

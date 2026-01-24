@@ -1,6 +1,6 @@
 ﻿import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AdminBottomNav, Icon } from "../components/Components";
+import { AdminBottomNav, Icon , formatVnd } from "../components/Components";
 import { useApp } from "../App";
 import { Order } from "../types";
 
@@ -116,7 +116,7 @@ export default function AdminCustomersScreen() {
           </div>
           <div className="rounded-xl bg-gray-50 dark:bg-[#24243e] border border-gray-100 dark:border-gray-800 p-3 text-center">
             <p className="text-xs text-gray-500">Revenue</p>
-            <p className="text-lg font-bold text-gray-900 dark:text-white">${totalRevenue.toFixed(2)}</p>
+            <p className="text-lg font-bold text-gray-900 dark:text-white">{formatVnd(totalRevenue)}</p>
           </div>
         </div>
 
@@ -180,7 +180,7 @@ export default function AdminCustomersScreen() {
                 <p className="text-xs text-gray-500 truncate">{customer.email}</p>
                 <div className="flex gap-3 mt-2 text-xs text-gray-500">
                   <span>Orders: {customer.totalOrders}</span>
-                  <span>Spend: ${customer.totalSpent.toFixed(2)}</span>
+                  <span>Spend: {formatVnd(customer.totalSpent)}</span>
                 </div>
                 <p className="text-xs text-gray-400 mt-1">
                   Last order: {customer.lastOrderDate}

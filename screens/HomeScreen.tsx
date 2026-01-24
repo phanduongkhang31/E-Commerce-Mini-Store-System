@@ -1,12 +1,21 @@
-import React, { useMemo, useState } from "react";
+﻿import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BottomNav, Icon } from "../components/Components";
 import { useApp } from "../App";
 
 export default function HomeScreen() {
   const navigate = useNavigate();
-  const { cart, addToCart, products, isLoading, searchQuery, setSearchQuery, wishlist, toggleWishlist } =
-    useApp();
+  const {
+    cart,
+    addToCart,
+    products,
+    categories,
+    isLoading,
+    searchQuery,
+    setSearchQuery,
+    wishlist,
+    toggleWishlist,
+  } = useApp();
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   const cartCount = cart.reduce((total: number, item: any) => {
@@ -14,15 +23,29 @@ export default function HomeScreen() {
     return total + qty;
   }, 0);
 
-  const categories = useMemo(
-    () => [
-      { value: "All", label: "Tất Cả" },
-      { value: "Clothing", label: "Thời trang" },
-      { value: "Electronics", label: "Điện tử" },
-      { value: "Home", label: "Nhà cửa" },
-    ],
-    []
-  );
+  const categoryOptions = useMemo(() => {
+    const base = [{ value: "All", label: "Tất cả" }];
+    if (categories.length === 0) {
+      return base.concat([
+        { value: "Thời trang", label: "Thời trang" },
+        { value: "Điện tử", label: "Điện tử" },
+        { value: "Nhà cửa", label: "Nhà cửa" },
+      ]);
+    }
+    return base.concat(
+      categories.map((category) => ({
+        value: category.name,
+        label: category.name,
+      }))
+    );
+  }, [categories]);
+
+  const formatVnd = (value: number) =>
+    new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+      maximumFractionDigits: 0,
+    }).format(value);
 
   const filteredProducts = products.filter((p) => {
     const matchesCategory = selectedCategory === "All" || p.category === selectedCategory;
@@ -49,8 +72,8 @@ export default function HomeScreen() {
           <button
             onClick={() => navigate("/cart")}
             className="relative p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-            aria-label="Giỏ Hàng"
-            title="Giỏ Hàng"
+            aria-label="Giỏ hàng"
+            title="Giỏ hàng"
           >
             <Icon name="shopping_cart" className="text-text-main-light dark:text-white" />
             {cartCount > 0 && (
@@ -101,21 +124,21 @@ export default function HomeScreen() {
               </div>
               <div className="flex flex-col justify-center p-5">
                 <span className="inline-block px-2 py-1 mb-2 text-xs font-semibold tracking-wide text-primary uppercase bg-primary/10 rounded-md w-fit">
-                  Sản Phẩm Nổi Bật
+                  Sản phẩm nổi bật
                 </span>
                 <h2 className="text-xl font-bold text-gray-900 dark:text-white leading-tight mb-1">
                   MiniStore
                 </h2>
                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                  Sản Phẩm Nổi Bật
+                  Sản phẩm nổi bật
                 </p>
                 <button
                   onClick={handleSeeAll}
                   className="w-full px-4 py-2 bg-primary hover:bg-primary/90 text-white text-sm font-medium rounded-lg transition-colors shadow-md shadow-primary/20"
-                  aria-label="Sản Phẩm Nổi Bật"
-                  title="Sản Phẩm Nổi Bật"
+                  aria-label="Sản phẩm nổi bật"
+                  title="Sản phẩm nổi bật"
                 >
-                  Sản Phẩm Nổi Bật
+                  Sản phẩm nổi bật
                 </button>
               </div>
             </div>
@@ -124,7 +147,7 @@ export default function HomeScreen() {
 
         <section className="w-full overflow-hidden">
           <div className="flex gap-3 px-4 overflow-x-auto no-scrollbar pb-1">
-            {categories.map((category) => {
+            {categoryOptions.map((category) => {
               const isActive = selectedCategory === category.value;
               return (
                 <button
@@ -149,16 +172,16 @@ export default function HomeScreen() {
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-lg font-bold text-gray-900 dark:text-white">
               {selectedCategory === "All"
-                ? "Sản Phẩm Nổi Bật"
-                : `${selectedCategory} Sản Phẩm`}
+                ? "Sản phẩm nổi bật"
+                : `${selectedCategory} sản phẩm`}
             </h2>
             <button
               onClick={handleSeeAll}
               className="text-xs font-medium text-primary hover:text-primary/80"
-              aria-label="Sản Phẩm"
-              title="Sản Phẩm"
+              aria-label="Sản phẩm"
+              title="Sản phẩm"
             >
-              Sản Phẩm
+              Sản phẩm
             </button>
           </div>
 
@@ -214,7 +237,7 @@ export default function HomeScreen() {
                     </h3>
                     <div className="mt-auto pt-2 flex items-end justify-between">
                       <span className="text-base font-bold text-gray-900 dark:text-white">
-                        ${product.price.toFixed(2)}
+                        {formatVnd(product.price)}
                       </span>
                       <button
                         type="button"

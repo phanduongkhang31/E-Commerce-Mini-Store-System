@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Icon, Button } from "../components/Components";
+import { Icon, Button , formatVnd } from "../components/Components";
 import { useApp } from "../App";
 
 const getStatusColor = (status: string) => {
@@ -212,7 +212,7 @@ export default function AdminOrderDetailScreen() {
                   </div>
                   <div className="text-right">
                     <p className="font-semibold text-sm dark:text-white">
-                      ${(item.price * item.quantity).toFixed(2)}
+                      {formatVnd((item.price * item.quantity))}
                     </p>
                     <span className="inline-block bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded text-xs text-gray-600 dark:text-gray-300 mt-1">
                       Số Lượng: {item.quantity}
@@ -235,7 +235,7 @@ export default function AdminOrderDetailScreen() {
                 </div>
                 <div className="text-right">
                   <p className="font-semibold text-sm dark:text-white">
-                    ${subTotal.toFixed(2)}
+                    {formatVnd(subTotal)}
                   </p>
                   <span className="inline-block bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded text-xs text-gray-600 dark:text-gray-300 mt-1">
                     Số Lượng: {order.items}
@@ -287,16 +287,16 @@ export default function AdminOrderDetailScreen() {
         <div className="bg-white dark:bg-[#1e1e2d] rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col gap-3 mt-2">
           <div className="flex justify-between text-sm">
             <span className="text-gray-500">Tạm Tính</span>
-            <span className="font-medium dark:text-white">${subTotal.toFixed(2)}</span>
+            <span className="font-medium dark:text-white">{formatVnd(subTotal)}</span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-gray-500">Vận Chuyển</span>
-            <span className="font-medium dark:text-white">${shippingCost.toFixed(2)}</span>
+            <span className="font-medium dark:text-white">{formatVnd(shippingCost)}</span>
           </div>
           <div className="h-px bg-gray-100 dark:bg-gray-800 my-1"></div>
           <div className="flex justify-between text-lg">
             <span className="font-bold dark:text-white">Tổng</span>
-            <span className="font-bold text-primary">${order.total.toFixed(2)}</span>
+            <span className="font-bold text-primary">{formatVnd(order.total)}</span>
           </div>
         </div>
       </main>

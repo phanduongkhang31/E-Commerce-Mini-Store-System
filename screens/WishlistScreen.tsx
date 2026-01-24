@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Header, Icon, BottomNav } from "../components/Components";
+import { Header, Icon, BottomNav , formatVnd } from "../components/Components";
 import { useApp } from "../App";
 
 export default function WishlistScreen() {
@@ -110,11 +110,11 @@ export default function WishlistScreen() {
                 <div className="flex items-center justify-between">
                   <div className="flex flex-col">
                     <span className="text-base font-bold text-primary">
-                      ${product.price.toFixed(2)}
+                      {formatVnd(product.price)}
                     </span>
                     {product.originalPrice && (
                       <span className="text-xs text-gray-400 line-through">
-                        ${product.originalPrice.toFixed(2)}
+                        {formatVnd(product.originalPrice)}
                       </span>
                     )}
                   </div>

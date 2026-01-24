@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Icon, AdminBottomNav } from "../components/Components";
+import { Icon, AdminBottomNav , formatVnd } from "../components/Components";
 import { useApp } from "../App";
 
 export default function AdminOrderListScreen() {
@@ -134,7 +134,7 @@ export default function AdminOrderListScreen() {
                       {order.items} sản phẩm
                     </p>
                     <p className="text-slate-900 dark:text-white text-lg font-bold">
-                      ${order.total.toFixed(2)}
+                      {formatVnd(order.total)}
                     </p>
                   </div>
                 </div>

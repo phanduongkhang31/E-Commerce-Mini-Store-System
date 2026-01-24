@@ -8,23 +8,18 @@ export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { login, loginWithGoogle, showToast } = useApp();
+  const { loginWithPassword, showToast } = useApp();
 
   const handleGoogleLogin = async () => {
-    await loginWithGoogle();
+    showToast("Đăng nhập Google chưa được hỗ trợ.");
   };
 
-  const handleLogin = (e: React.FormEvent) => {
-      e.preventDefault();
-      if (email === 'admin@store.com' && password === 'admin') {
-          login(email, 'admin');
-          showToast("Chào mừng Admin!");
-          navigate('/admin');
-      } else {
-          login(email, 'user');
-          showToast("Chào mừng trở lại!");
-          navigate('/');
-      }
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const role = await loginWithPassword(email, password);
+    if (!role) return;
+    showToast(role === "admin" ? "Chào mừng Admin!" : "Chào mừng trở lại!");
+    navigate(role === "admin" ? "/admin" : "/");
   };
 
   return (

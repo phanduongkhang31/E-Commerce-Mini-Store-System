@@ -145,7 +145,7 @@ export default function AdminSettingsScreen() {
                   setSettings((prev) => ({ ...prev, currency: e.target.value }))
                 }
               >
-                <option>USD ($)</option>
+                <option>VND (?)</option>
                 <option>EUR (EUR)</option>
                 <option>GBP (GBP)</option>
                 <option>JPY (JPY)</option>

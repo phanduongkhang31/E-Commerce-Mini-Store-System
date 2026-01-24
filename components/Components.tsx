@@ -1,6 +1,13 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
+export const formatVnd = (value: number) =>
+  new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+    maximumFractionDigits: 0,
+  }).format(value);
+
 export const Icon = ({ name, className = "", filled = false }: { name: string; className?: string; filled?: boolean }) => (
   <span className={`material-symbols-outlined ${filled ? 'fill' : ''} ${className}`}>
     {name}

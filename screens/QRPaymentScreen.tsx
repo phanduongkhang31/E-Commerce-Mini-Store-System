@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Header, Icon, Button } from "../components/Components";
+import { Header, Icon, Button , formatVnd } from "../components/Components";
 import { useApp } from "../App";
 
 export default function QRPaymentScreen() {
@@ -113,7 +113,7 @@ export default function QRPaymentScreen() {
 
             <div className="w-full bg-primary/10 dark:bg-primary/20 rounded-xl p-4 text-center">
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Số tiền thanh toán</p>
-              <p className="text-3xl font-bold text-primary">${total.toFixed(2)}</p>
+              <p className="text-3xl font-bold text-primary">{formatVnd(total)}</p>
             </div>
           </div>
         </div>

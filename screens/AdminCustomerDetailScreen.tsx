@@ -1,6 +1,6 @@
 ﻿import React, { useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Icon } from "../components/Components";
+import { Icon , formatVnd } from "../components/Components";
 import { useApp } from "../App";
 import { Order } from "../types";
 
@@ -136,11 +136,11 @@ export default function AdminCustomerDetailScreen() {
           </div>
           <div className="rounded-xl bg-gray-50 dark:bg-[#24243e] border border-gray-100 dark:border-gray-800 p-3 text-center">
             <p className="text-xs text-gray-500">Spent</p>
-            <p className="text-lg font-bold text-gray-900 dark:text-white">${customer.totalSpent.toFixed(2)}</p>
+            <p className="text-lg font-bold text-gray-900 dark:text-white">{formatVnd(customer.totalSpent)}</p>
           </div>
           <div className="rounded-xl bg-gray-50 dark:bg-[#24243e] border border-gray-100 dark:border-gray-800 p-3 text-center">
             <p className="text-xs text-gray-500">Avg</p>
-            <p className="text-lg font-bold text-gray-900 dark:text-white">${averageOrder.toFixed(2)}</p>
+            <p className="text-lg font-bold text-gray-900 dark:text-white">{formatVnd(averageOrder)}</p>
           </div>
         </div>
         <p className="text-xs text-gray-400 mt-3">Last order: {customer.lastOrderDate}</p>
@@ -167,7 +167,7 @@ export default function AdminCustomerDetailScreen() {
                 <p className="text-xs text-gray-500">Status: {order.status}</p>
               </div>
               <div className="text-right">
-                <p className="text-sm font-semibold text-gray-900 dark:text-white">${order.total.toFixed(2)}</p>
+                <p className="text-sm font-semibold text-gray-900 dark:text-white">{formatVnd(order.total)}</p>
                 <button
                   onClick={() => navigate(`/admin/orders/${order.id}`)}
                   className="text-xs text-primary font-semibold"

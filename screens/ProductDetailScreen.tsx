@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Icon, Button } from '../components/Components';
+import { Icon, Button , formatVnd } from '../components/Components';
 import { useApp } from '../App';
 
 export default function ProductDetailScreen() {
@@ -44,10 +44,10 @@ export default function ProductDetailScreen() {
               </button>
             </div>
             <div className="flex items-center gap-3 mb-4">
-              <span className="text-3xl font-bold text-gray-900 dark:text-white">${product.price.toFixed(2)}</span>
+              <span className="text-3xl font-bold text-gray-900 dark:text-white">{formatVnd(product.price)}</span>
               {product.originalPrice && (
                  <>
-                  <span className="text-lg text-gray-400 line-through decoration-1">${product.originalPrice.toFixed(2)}</span>
+                  <span className="text-lg text-gray-400 line-through decoration-1">{formatVnd(product.originalPrice)}</span>
                   <span className="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-bold text-red-600 dark:bg-red-900/30 dark:text-red-400">-30%</span>
                  </>
               )}

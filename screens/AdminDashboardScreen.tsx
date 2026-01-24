@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { AdminBottomNav, Icon } from "../components/Components";
+import { AdminBottomNav, Icon , formatVnd } from "../components/Components";
 import { useApp } from "../App";
 
 const getStatusLabel = (status: string) => {
@@ -66,7 +66,7 @@ export default function AdminDashboardScreen() {
             </div>
             <div className="flex items-end gap-2 mt-1">
               <p className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                ${totalRevenue.toFixed(2)}
+                {formatVnd(totalRevenue)}
               </p>
             </div>
             <div className="flex items-center gap-1 mt-1">
@@ -368,7 +368,7 @@ export default function AdminDashboardScreen() {
               </div>
               <div className="text-right">
                 <p className="text-sm font-bold text-gray-900 dark:text-white">
-                  ${order.total.toFixed(2)}
+                  {formatVnd(order.total)}
                 </p>
                 <span
                   className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Button, Icon } from '../components/Components';
+import { Button, Icon , formatVnd } from '../components/Components';
 
 export default function OrderSuccessScreen() {
   const navigate = useNavigate();
@@ -52,7 +52,7 @@ export default function OrderSuccessScreen() {
                      </p>
                  </div>
                  <p className="text-slate-900 dark:text-white text-sm font-semibold">
-                   ${safeTotal.toFixed(2)}
+                   {formatVnd(safeTotal)}
                  </p>
              </div>
           </div>

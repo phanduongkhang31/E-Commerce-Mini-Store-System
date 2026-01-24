@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AdminBottomNav, Icon } from "../components/Components";
+import { AdminBottomNav, Icon , formatVnd } from "../components/Components";
 import { useApp } from "../App";
 
 export default function AdminProductListScreen() {
@@ -189,7 +189,7 @@ export default function AdminProductListScreen() {
 
                 <div className="flex justify-between items-end mt-2">
                   <p className="text-base font-bold text-primary">
-                    ${item.price.toFixed(2)}
+                    {formatVnd(item.price)}
                   </p>
 
                   <span
