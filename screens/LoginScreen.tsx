@@ -8,10 +8,10 @@ export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { loginWithPassword, showToast } = useApp();
+  const { loginWithPassword, loginWithGoogle, showToast } = useApp();
 
   const handleGoogleLogin = async () => {
-    showToast("Đăng nhập Google chưa được hỗ trợ.");
+    await loginWithGoogle();
   };
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -32,11 +32,10 @@ export default function LoginScreen() {
           <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary">
             <Icon name="storefront" className="text-[28px]" />
           </div>
-          <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Chào mừng trở lại!</h1>
-          <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">Đăng nhập để quản lý cửa hàng của bạn</p>
+          <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Chào mừng!</h1>
+          <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">Xin hãy đăng nhập</p>
           <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-            <Icon name="info" className="text-base" />
-            <span>Dùng thử: admin@store.com / admin</span>
+
           </div>
         </div>
 
@@ -57,7 +56,7 @@ export default function LoginScreen() {
               <input type="checkbox" className="h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary" />
               <span>Ghi nhớ đăng nhập</span>
             </label>
-            <span className="text-xs text-slate-400">Bảo mật bởi ShopGuard</span>
+            <span className="text-xs text-slate-400">Bảo mật</span>
           </div>
           <Button type="submit" className="w-full">Đăng nhập</Button>
         </form>
